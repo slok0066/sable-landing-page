@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Shield,
   PenTool,
@@ -11,7 +13,21 @@ import {
   Download,
   ArrowRight,
   Github,
+  BookOpen,
+  Edit3,
+  Settings,
+  Info,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
+
+/* ─── Showcase Data ─── */
+const showcaseTabs = [
+  { id: "library", label: "Library", icon: BookOpen, image: "/ss1.png", alt: "Sable Library — browse and organize all your notebooks" },
+  { id: "editor", label: "Editor", icon: Edit3, image: "/ss4.png", alt: "Sable Editor — a distraction-free writing canvas" },
+  { id: "settings", label: "Settings", icon: Settings, image: "/ss2.png", alt: "Sable Settings — customize your writing environment" },
+  { id: "about", label: "About", icon: Info, image: "/ss3.png", alt: "Sable About — built with love for writers" },
+];
 
 /* ─── Animation Variants ─── */
 const fadeUp = {
@@ -34,6 +50,37 @@ const scaleIn = {
     opacity: 1,
     scale: 1,
     transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+const coverflowVariants = {
+  center: {
+    x: "0%",
+    scale: 1,
+    zIndex: 10,
+    opacity: 1,
+    filter: "blur(0px) brightness(100%)",
+  },
+  left: {
+    x: "-45%",
+    scale: 0.8,
+    zIndex: 5,
+    opacity: 0.5,
+    filter: "blur(2px) brightness(60%)",
+  },
+  right: {
+    x: "45%",
+    scale: 0.8,
+    zIndex: 5,
+    opacity: 0.5,
+    filter: "blur(2px) brightness(60%)",
+  },
+  hidden: {
+    x: "0%",
+    scale: 0.6,
+    zIndex: 0,
+    opacity: 0,
+    filter: "blur(4px)",
   },
 };
 
@@ -78,6 +125,34 @@ const features = [
 ];
 
 export default function Home() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setActiveIndex((prev) => (prev + newDirection + showcaseTabs.length) % showcaseTabs.length);
+  };
+
+  const handleTabClick = (index: number) => {
+    if (index === activeIndex) return;
+    setDirection(index > activeIndex ? 1 : -1);
+    setActiveIndex(index);
+  };
+
+  const getOffset = (index: number) => {
+    let diff = index - activeIndex;
+    if (diff > showcaseTabs.length / 2) diff -= showcaseTabs.length;
+    if (diff <= -showcaseTabs.length / 2) diff += showcaseTabs.length;
+    return diff;
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      paginate(1);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [activeIndex]);
+
   return (
     <div className="page-wrapper">
       {/* ══════════════════════════════════════════
@@ -150,46 +225,21 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Mock editor preview */}
+        {/* App screenshot preview */}
         <motion.div
-          className="hero-editor-card"
+          className="hero-screenshot-card"
           variants={scaleIn}
           initial="hidden"
           animate="visible"
         >
-          <div className="editor-chrome">
-            <div className="editor-dots">
-              <span className="dot dot-red" />
-              <span className="dot dot-yellow" />
-              <span className="dot dot-green" />
-            </div>
-            <span className="editor-title">untitled.md — Sable</span>
-          </div>
-          <div className="editor-body">
-            <div className="editor-sidebar">
-              <div className="sidebar-item active">Chapter One</div>
-              <div className="sidebar-item">Chapter Two</div>
-              <div className="sidebar-item">Chapter Three</div>
-              <div className="sidebar-item dim">Notes</div>
-            </div>
-            <div className="editor-content">
-              <h4 className="editor-chapter-title">Chapter One.</h4>
-              <p className="editor-text">
-                The morning light filtered through the curtains, casting long
-                amber streaks across the wooden desk. She sat down, opened her
-                notebook, and let the silence settle around her like snow.
-              </p>
-              <p className="editor-text">
-                There was a quietness to this hour that felt like a gift — the
-                kind only early risers knew.
-              </p>
-              <div className="editor-margin-note">
-                <span className="margin-note-icon">✎</span>
-                Maybe use a more descriptive adjective here?
-              </div>
-              <p className="editor-cursor">|</p>
-            </div>
-          </div>
+          <Image
+            src="/ss4.png"
+            alt="Sable Editor — a distraction-free writing canvas"
+            width={1540}
+            height={770}
+            className="hero-screenshot-img"
+            priority
+          />
         </motion.div>
 
         {/* Small feature badges */}
@@ -274,6 +324,103 @@ export default function Home() {
           </p>
           <cite>— The Sable Manifesto</cite>
         </motion.blockquote>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          APP SHOWCASE SECTION
+      ══════════════════════════════════════════ */}
+      <section className="showcase-section" id="showcase">
+        <motion.div
+          className="section-header"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
+          <motion.h2 variants={fadeUp} custom={0}>
+            See Sable in action.
+          </motion.h2>
+          <motion.p className="section-subtitle" variants={fadeUp} custom={1}>
+            A calm, thoughtfully designed interface that disappears so you can
+            focus on what matters — your writing.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="showcase-container"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={scaleIn}
+        >
+          {/* Coverflow Header */}
+          <div className="coverflow-header">
+            <span>Themes & Views</span>
+            <span>{String(activeIndex + 1).padStart(2, "0")} / {String(showcaseTabs.length).padStart(2, "0")}</span>
+          </div>
+
+          <div className="coverflow-wrapper">
+            {showcaseTabs.map((tab, i) => {
+              const offset = getOffset(i);
+              let animateState = "hidden";
+              if (offset === 0) animateState = "center";
+              else if (offset === 1) animateState = "right";
+              else if (offset === -1) animateState = "left";
+
+              return (
+                <motion.div
+                  key={tab.id}
+                  className="coverflow-item"
+                  animate={animateState}
+                  variants={coverflowVariants}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  onClick={() => {
+                    if (offset !== 0) handleTabClick(i);
+                  }}
+                >
+                  <Image
+                    src={tab.image}
+                    alt={tab.alt}
+                    width={1540}
+                    height={770}
+                    className="showcase-image"
+                    priority={offset === 0}
+                  />
+                  <div className={`coverflow-label ${offset === 0 ? "visible" : ""}`}>
+                    <h3>{tab.label}</h3>
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            <button
+              className="carousel-btn prev"
+              onClick={() => paginate(-1)}
+              aria-label="Previous screenshot"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              className="carousel-btn next"
+              onClick={() => paginate(1)}
+              aria-label="Next screenshot"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+
+          {/* Pagination Indicators */}
+          <div className="coverflow-pagination">
+            {showcaseTabs.map((_, i) => (
+              <button
+                key={i}
+                className={`pagination-dot ${i === activeIndex ? "active" : ""}`}
+                onClick={() => handleTabClick(i)}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════
