@@ -314,25 +314,130 @@ a:hover {
   background: rgba(239, 189, 138, 0.05);
 }
 
-/* ─── Hero Screenshot ─── */
-.hero-screenshot-card {
+/* ─── HTML Faux Editor Preview ─── */
+.faux-editor-card {
   position: relative;
   z-index: 2;
   margin-top: 4rem;
   width: 100%;
-  max-width: 960px;
-  border-radius: 0.75rem;
-  overflow: hidden;
+  max-width: 1060px;
+  border-radius: 12px;
   background: var(--surface);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(80, 69, 59, 0.12);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  overflow: hidden;
+  font-family: var(--font-body);
 }
 
-.hero-screenshot-img {
-  width: 100%;
-  height: auto;
+.faux-editor-header {
+  height: 48px;
+  background: #fdfdfc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.faux-header-left, .faux-header-center, .faux-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.faux-header-center {
+  gap: 1.5rem;
+  font-family: serif;
+}
+
+.faux-icon {
+  opacity: 0.6;
+}
+
+.faux-icon.italic { font-style: italic; }
+.faux-icon.underline { text-decoration: underline; }
+
+.faux-publish-btn {
+  background: #27c93f;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.faux-editor-body {
+  padding: 4rem 15% 6rem;
+  background: #fdfdfc;
+  color: #111;
+  position: relative;
+  min-height: 400px;
+}
+
+.faux-editor-body h2 {
+  font-family: var(--font-headline);
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #111;
+  letter-spacing: -0.02em;
+}
+
+.faux-editor-text p {
+  font-family: var(--font-headline);
+  font-size: 1.35rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.faux-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.25em;
+  background-color: var(--primary);
+  vertical-align: text-bottom;
+  animation: fauxBlink 1s step-end infinite;
+  margin-left: 4px;
+}
+
+@keyframes fauxBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .faux-editor-header { display: none; }
+  .faux-editor-body { padding: 2rem 1.5rem 4rem; }
+  .faux-editor-body h2 { font-size: 2rem; }
+  .faux-editor-text p { font-size: 1.1rem; }
+}
+
+.faux-editor-label {
   display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Design Principle Callout ─── */
+.design-principle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-top: 3rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  letter-spacing: 0.01em;
 }
 
 /* ─── Hero Badges ─── */

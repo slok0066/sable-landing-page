@@ -49,7 +49,7 @@ const scaleIn = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, ease: "easeOut" },
   },
 };
 
@@ -90,37 +90,37 @@ const features = [
     icon: Shield,
     title: "Local-First & Private",
     description:
-      "Your words never leave your device. No cloud syncing you didn't ask for, no tracking, and absolutely no compromise on your creative privacy.",
+      "Your words never leave your device. No cloud, no tracking, no compromise.",
   },
   {
     icon: PenTool,
     title: "Distraction-Free Editor",
     description:
-      "A beautiful, minimal writing canvas featuring focus mode, typewriter scrolling, and integrated ambient soundscapes designed to induce deep flow.",
-  },
-  {
-    icon: Sparkles,
-    title: "AI Writing Assistant",
-    description:
-      "Smart suggestions that respect your voice. From grammar fixing to rewriting and narrative continuation, powered by local-first AI models.",
+      "Focus mode, typewriter scrolling, and ambient sounds. Just you and the page.",
   },
   {
     icon: Terminal,
     title: "Rich Writing Tools",
     description:
-      "Slash commands for speed, mood boards for inspiration, margin notes for edits, and sprint timers to keep you moving.",
+      "Slash commands, mood boards, margin notes, and sprint timers to keep you in flow.",
   },
   {
     icon: FileText,
     title: "Beautiful Export",
     description:
-      "Turn your manuscript into a masterpiece. Publish as PDF, Markdown, HTML, or even a professionally formatted zine-style booklet ready for print.",
+      "Publish as PDF, Markdown, HTML, or a print-ready zine-style booklet.",
   },
   {
     icon: Clock,
     title: "Version History",
     description:
-      "Never lose a single character. Automatic snapshots keep every version of your work safe, allowing you to travel back through the timeline of your story.",
+      "Automatic snapshots of every version. Travel back through your story\u2019s timeline.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI Assistant (optional)",
+    description:
+      "Grammar, rewrites, and continuations \u2014 powered by local AI. Stays out of your way.",
   },
 ];
 
@@ -204,8 +204,8 @@ export default function Home() {
             </span>
           </motion.h1>
           <motion.p className="hero-subtext" variants={fadeUp} custom={1}>
-            Sable is a beautiful, local-first writing app that keeps your words
-            private, your focus sharp, and your creativity flowing.
+            A beautiful, local-first writing app. Your words stay on your
+            device. Your focus stays unbroken.
           </motion.p>
           <motion.div className="hero-actions" variants={fadeUp} custom={2}>
             <a href="#download" className="btn-primary" id="hero-download-btn">
@@ -225,24 +225,46 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* App screenshot preview */}
+        {/* HTML Faux Editor Preview */}
         <motion.div
-          className="hero-screenshot-card"
+          className="faux-editor-card"
           variants={scaleIn}
           initial="hidden"
           animate="visible"
         >
-          <Image
-            src="/ss4.png"
-            alt="Sable Editor — a distraction-free writing canvas"
-            width={1540}
-            height={770}
-            className="hero-screenshot-img"
-            priority
-          />
+          <div className="faux-editor-header">
+            <div className="faux-header-left">
+              <ChevronLeft size={16} />
+              <span>Journal 2025</span>
+            </div>
+            
+            <div className="faux-header-center">
+              <span className="faux-icon">B</span>
+              <span className="faux-icon italic">I</span>
+              <span className="faux-icon underline">U</span>
+            </div>
+            
+            <div className="faux-header-right">
+              <span className="faux-publish-btn">✦ Publish</span>
+            </div>
+          </div>
+          
+          <div className="faux-editor-body">
+            <h2>Chapter One</h2>
+            <div className="faux-editor-text">
+              <p>
+                The morning light was gentle, filtering through half-drawn
+                curtains. She sat at the old desk, the one her grandmother had
+                kept by the window, and began to write.
+              </p>
+              <div className="faux-cursor"></div>
+            </div>
+          </div>
         </motion.div>
 
-        {/* Small feature badges */}
+        <span className="faux-editor-label">Preview only · Not interactive</span>
+
+        {/* Trust signal badges */}
         <motion.div
           className="hero-badges"
           initial={{ opacity: 0 }}
@@ -250,84 +272,19 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <div className="badge">
-            <Shield size={14} /> Distraction-Free
+            <Shield size={14} /> 100% Offline
           </div>
           <div className="badge">
-            <Download size={14} /> Local-First
+            <Shield size={14} /> Zero Tracking
           </div>
           <div className="badge">
-            <Sparkles size={14} /> Rich Typography
+            <Github size={14} /> Open Source
           </div>
         </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════
-          FEATURES SECTION
-      ══════════════════════════════════════════ */}
-      <section className="features-section" id="features">
-        <motion.div
-          className="section-header"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-        >
-          <motion.h2 variants={fadeUp} custom={0}>
-            Everything you need.
-            <br />
-            <span className="text-accent">Nothing you don&apos;t.</span>
-          </motion.h2>
-          <motion.p className="section-subtitle" variants={fadeUp} custom={1}>
-            Sable is designed to disappear. We&apos;ve stripped away the noise of
-            modern software to leave only the essential tools for the craft of
-            writing.
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          className="features-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-        >
-          {features.map((f, i) => (
-            <motion.div
-              className="feature-card"
-              key={i}
-              id={`feature-${i}`}
-              variants={fadeUp}
-              custom={i}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-            >
-              <div className="feature-icon">
-                <f.icon size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="feature-title">{f.title}</h3>
-              <p className="feature-desc">{f.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Editorial quote */}
-        <motion.blockquote
-          className="editorial-quote"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={scaleIn}
-        >
-          <p>
-            &ldquo;A tool should be like a masterfully crafted pen: weighted
-            perfectly, silent in its operation, and entirely subservient to the
-            hand that holds it.&rdquo;
-          </p>
-          <cite>— The Sable Manifesto</cite>
-        </motion.blockquote>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          APP SHOWCASE SECTION
+          APP SHOWCASE SECTION (moved before features)
       ══════════════════════════════════════════ */}
       <section className="showcase-section" id="showcase">
         <motion.div
@@ -338,11 +295,10 @@ export default function Home() {
           variants={staggerContainer}
         >
           <motion.h2 variants={fadeUp} custom={0}>
-            See Sable in action.
+            Inside Sable
           </motion.h2>
           <motion.p className="section-subtitle" variants={fadeUp} custom={1}>
-            A calm, thoughtfully designed interface that disappears so you can
-            focus on what matters — your writing.
+            A calm, minimal interface designed to get out of your way.
           </motion.p>
         </motion.div>
 
@@ -355,7 +311,7 @@ export default function Home() {
         >
           {/* Coverflow Header */}
           <div className="coverflow-header">
-            <span>Themes & Views</span>
+            <span><strong>{showcaseTabs[activeIndex].label}</strong></span>
             <span>{String(activeIndex + 1).padStart(2, "0")} / {String(showcaseTabs.length).padStart(2, "0")}</span>
           </div>
 
@@ -386,9 +342,6 @@ export default function Home() {
                     className="showcase-image"
                     priority={offset === 0}
                   />
-                  <div className={`coverflow-label ${offset === 0 ? "visible" : ""}`}>
-                    <h3>{tab.label}</h3>
-                  </div>
                 </motion.div>
               );
             })}
@@ -411,16 +364,74 @@ export default function Home() {
 
           {/* Pagination Indicators */}
           <div className="coverflow-pagination">
-            {showcaseTabs.map((_, i) => (
+            {showcaseTabs.map((tab, i) => (
               <button
                 key={i}
                 className={`pagination-dot ${i === activeIndex ? "active" : ""}`}
                 onClick={() => handleTabClick(i)}
-                aria-label={`Go to slide ${i + 1}`}
+                aria-label={tab.label}
               />
             ))}
           </div>
         </motion.div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          FEATURES SECTION
+      ══════════════════════════════════════════ */}
+      <section className="features-section" id="features">
+        <motion.div
+          className="section-header"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
+          <motion.h2 variants={fadeUp} custom={0}>
+            Everything you need.
+            <br />
+            <span className="text-accent">Nothing you don&apos;t.</span>
+          </motion.h2>
+          <motion.p className="section-subtitle" variants={fadeUp} custom={1}>
+            Built for focus. No bloat, no accounts, no notifications.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="features-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={staggerContainer}
+        >
+          {features.map((f, i) => (
+            <motion.div
+              className="feature-card"
+              key={i}
+              id={`feature-${i}`}
+              variants={fadeUp}
+              custom={i}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            >
+              <div className="feature-icon">
+                <f.icon size={24} strokeWidth={1.5} />
+              </div>
+              <h3 className="feature-title">{f.title}</h3>
+              <p className="feature-desc">{f.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Design principle callout */}
+        <motion.p
+          className="design-principle"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={scaleIn}
+        >
+          ✦ <em>Sable&apos;s guiding principle: a tool should be invisible. You should only notice your words.</em>
+        </motion.p>
       </section>
 
       {/* ══════════════════════════════════════════
@@ -435,13 +446,10 @@ export default function Home() {
           variants={staggerContainer}
         >
           <motion.h2 className="cta-headline" variants={fadeUp} custom={0}>
-            Start writing beautifully.{" "}
-            <span className="text-accent">Today.</span>
+            Ready to write?
           </motion.h2>
           <motion.p className="cta-subtext" variants={fadeUp} custom={1}>
-            Sable is free, open-source, and built for writers who care about
-            their craft. Focus on your words in an environment designed for deep
-            creative work.
+            Free, open-source, and yours forever. No account needed.
           </motion.p>
           <motion.div className="cta-actions" variants={fadeUp} custom={2}>
             <a href="#" className="btn-primary btn-lg" id="cta-download-btn">
@@ -458,7 +466,7 @@ export default function Home() {
             variants={fadeUp}
             custom={3}
           >
-            View Source on GitHub <ArrowRight size={16} />
+            View source on GitHub <ArrowRight size={16} />
           </motion.a>
         </motion.div>
       </section>

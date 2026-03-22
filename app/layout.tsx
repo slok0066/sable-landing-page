@@ -17,9 +17,20 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sable-app.com"),
   title: "Sable — Write with Intention",
   description:
     "Sable is a beautiful, local-first writing app that keeps your words private, your focus sharp, and your creativity flowing.",
+  manifest: "/site.webmanifest",
+  openGraph: {
+    type: "website",
+    title: "Sable — Write with Intention",
+    description: "A beautiful, local-first writing app.",
+    siteName: "Sable",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
