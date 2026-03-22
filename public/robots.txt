@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sable-app.com/sitemap.xml
+Sitemap: https://sable-app.tech/sitemap.xml

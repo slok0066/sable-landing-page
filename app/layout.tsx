@@ -17,7 +17,7 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sable-app.com"),
+  metadataBase: new URL("https://sable-app.tech"),
   title: "Sable — Write with Intention",
   description:
     "Sable is a beautiful, local-first writing app that keeps your words private, your focus sharp, and your creativity flowing.",
